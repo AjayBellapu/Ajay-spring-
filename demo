@@ -1,0 +1,70 @@
+
+// 
+package com.example.demo;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+@SpringBootApplication
+public class DemoApplication {
+
+	public static void main(String[] args) {
+		ApplicationContext context=SpringApplication.run(DemoApplication.class, args);
+		railsDBOperation traindb=context.getBean(railsDBOperation.class);
+			traindb.addTrains(new rails(12, "krishna"));
+			traindb.addTrains(new rails(13, "simhapuri"));
+			traindb.addTrains(new rails(14, "charminar"));
+			traindb.addTrains(new rails(15, "shabhari"));
+			traindb.addTrains(new rails(16, "godavri"));
+			traindb.addTrains(new rails(17, "guntur"));
+			traindb.addTrains(new rails(18, "tirupati"));
+			
+			
+			ticketcounterdboperation ticketdb=context.getBean(ticketcounterdboperation.class);
+	
+		Scanner sc = new Scanner(System.in);
+			System.out.println("Enter choice");
+			int choice=Integer.parseInt(sc.nextLine());
+			if(choice==1) {
+				System.out.println("Enter your trainname");
+				String trainname=sc.nextLine();
+				System.out.println("Enter your place");
+				String place=sc.nextLine();
+				System.out.println("Enter no.of.passengers");
+				int passengers=Integer.parseInt(sc.nextLine());
+			System.out.println("Enter price of ticket");
+				int price=Integer.parseInt(sc.nextLine());
+				System.out.println("Enter id of ticket");
+				int id=Integer.parseInt(sc.nextLine());
+				int TotalAmount = passengers*price;
+				System.out.println("Ticket id : "+id);
+				System.out.println("No.of.Passengers : "+passengers);
+				System.out.println("Place : "+place);
+				System.out.println("Trainname : "+trainname);
+				System.out.println("AtDate : "+LocalDate.now());
+				System.out.println("AtTime : "+LocalTime.now());
+				System.out.println("Price : "+price);
+				System.out.println("Total Amount : "+TotalAmount);
+				ticketdb.addTickets(id, passengers, place, trainname, LocalDate.now(), LocalTime.now(), price, TotalAmount);
+			//ticketdb.addDetails(id, passengers, place, trainname, LocalDate.now(), LocalTime.now(), price, TotalAmount);
+			
+			}else if(choice==2) {
+				traindb.getTickets();
+			}else if(choice==3){
+				ticketdb.getTickets();
+			}else if(choice==4){
+				ticketdb.getInfo("guntur");
+			}else {
+				System.out.println("Invalid");
+			}
+			
+	}
+
+	}
